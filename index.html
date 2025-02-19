@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>CHAT SESSION</h2>
+            <div class="menu">Menu ▼
+                <ul class="menu-options">
+                    <!-- <li onclick="changeBackground()">Change Background</li> -->
+                    <li onclick="changeChatColor()">Change Chat Color</li>
+                </ul>
+            </div>
+            <ul id="chatList"></ul>
+        </div>
+        <div class="chat-container">
+            <h2>CHAT DETAILS</h2>
+            <div class="chat-header">
+                <img id="chatAvatar" src="images/men1.png" alt="Profile">
+                <div>
+                    <h3 id="chatName">Loading...</h3>
+                    <p id="chatStatus"></p>
+                </div>
+            </div>
+            <div id="chatMessages" class="chat-box"></div>
+            <div class="chat-footer">
+                <textarea id="messageInput" placeholder="Type your message here..."></textarea>
+                <button id="sendBtn">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

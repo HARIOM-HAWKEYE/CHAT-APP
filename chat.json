@@ -1,0 +1,93 @@
+[
+    {
+        "id": 1,
+        "name": "John Mayers",
+        "avatar": "images/men1.png",
+        "status": "Accountant",
+        "messages": [
+            { "sender": "John Mayers", "text": "Hello, how are you?" },
+            { "sender": "You", "text": "I'm good, thanks for asking!" },
+            { "sender": "John Mayers", "text": "Need any help today?" },
+            { "sender": "You", "text": "Not right now, but I'll let you know." },
+            { "sender": "John Mayers", "text": "Alright, have a great day!" }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Tony Stark",
+        "avatar": "images/men2.png",
+        "status": "Engineer",
+        "messages": [
+            { "sender": "Tony Stark", "text": "Hey, what's up?" },
+            { "sender": "You", "text": "Not much, just working on a project." },
+            { "sender": "Tony Stark", "text": "Sounds cool! Need any help?" },
+            { "sender": "You", "text": "Maybe later, thanks!" },
+            { "sender": "Tony Stark", "text": "Sure, just let me know." }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Michael Scott",
+        "avatar": "images/men3.png",
+        "status": "Manager",
+        "messages": [
+            { "sender": "Michael Scott", "text": "Did you see my latest email?" },
+            { "sender": "You", "text": "Yes, I will respond soon." },
+            { "sender": "Michael Scott", "text": "Great, looking forward to it." },
+            { "sender": "You", "text": "I'll send it by the end of the day." },
+            { "sender": "Michael Scott", "text": "Thanks! Appreciate it." }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "David Beckham",
+        "avatar": "images/men4.png",
+        "status": "Coach",
+        "messages": [
+            { "sender": "David Beckham", "text": "Are you coming to practice today?" },
+            { "sender": "You", "text": "Yes, I'll be there." },
+            { "sender": "David Beckham", "text": "Great! We have some new drills." },
+            { "sender": "You", "text": "Looking forward to it!" },
+            { "sender": "David Beckham", "text": "See you then!" }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Emma Watson",
+        "avatar": "images/girl1.jpeg",
+        "status": "Designer",
+        "messages": [
+            { "sender": "Emma Watson", "text": "Hey! How’s your day going?" },
+            { "sender": "You", "text": "Pretty good! How about you?" },
+            { "sender": "Emma Watson", "text": "Busy with some design work." },
+            { "sender": "You", "text": "That sounds fun! Need any feedback?" },
+            { "sender": "Emma Watson", "text": "Maybe later! Thanks!" }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Sophia Martinez",
+        "avatar": "images/girl2.jpeg",
+        "status": "Doctor",
+        "messages": [
+            { "sender": "Sophia Martinez", "text": "Hope you’re staying healthy!" },
+            { "sender": "You", "text": "Yes, I'm taking care." },
+            { "sender": "Sophia Martinez", "text": "Good to hear!" },
+            { "sender": "You", "text": "Thanks for checking in!" },
+            { "sender": "Sophia Martinez", "text": "Anytime!" }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Olivia Brown",
+        "avatar": "images/girl3.jpeg",
+        "status": "Artist",
+        "messages": [
+            { "sender": "Olivia Brown", "text": "Wanna see my latest painting?" },
+            { "sender": "You", "text": "Sure, I’d love to!" },
+            { "sender": "Olivia Brown", "text": "I'll send you a picture!" },
+            { "sender": "You", "text": "Can't wait to see it!" },
+            { "sender": "Olivia Brown", "text": "Sent! Let me know what you think." }
+        ]
+    }
+]
