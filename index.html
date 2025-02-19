@@ -4,36 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            background: #3498db;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar .options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navbar input[type="color"],
+        .navbar input[type="file"] {
+            cursor: pointer;
+        }
+
+        .chat-container {
+            display: flex;
+            width: 80%;
+            height: 80vh;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+
+        .contacts {
+            width: 30%;
+            background: #2c3e50;
+            color: #fff;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .contact {
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .contact:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .contact img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid #fff;
+        }
+
+        .chat-box {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            background: #ecf0f1;
+            position: relative;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: #3498db;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .message.you {
+            background: #3498db;
+            color: #fff;
+            align-self: flex-end;
+        }
+
+        .message.other {
+            background: #bdc3c7;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .input-box {
+            display: flex;
+            padding: 10px;
+            background: #fff;
+            border-top: 1px solid #ccc;
+        }
+
+        .input-box input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-box button {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .input-box button:hover {
+            background: #2980b9;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <h2>CHAT SESSION</h2>
-            <div class="menu">Menu ▼
-                <ul class="menu-options">
-                    <!-- <li onclick="changeBackground()">Change Background</li> -->
-                    <li onclick="changeChatColor()">Change Chat Color</li>
-                </ul>
-            </div>
-            <ul id="chatList"></ul>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">Chat App</div>
+        <div class="options">
+            <label>Change Color: <input type="color" id="colorPicker"></label>
+            <label>Change Background: <input type="file" id="bgUploader" accept="image/*"></label>
         </div>
-        <div class="chat-container">
-            <h2>CHAT DETAILS</h2>
-            <div class="chat-header">
-                <img id="chatAvatar" src="images/men1.png" alt="Profile">
-                <div>
-                    <h3 id="chatName">Loading...</h3>
-                    <p id="chatStatus"></p>
-                </div>
-            </div>
-            <div id="chatMessages" class="chat-box"></div>
-            <div class="chat-footer">
-                <textarea id="messageInput" placeholder="Type your message here..."></textarea>
-                <button id="sendBtn">Send</button>
+    </div>
+
+    <div class="chat-container">
+        <div class="contacts" id="contacts"></div>
+        <div class="chat-box">
+            <div class="chat-header" id="chat-title">Select a contact</div>
+            <div class="messages" id="messages"></div>
+            <div class="input-box">
+                <input type="text" id="messageInput" placeholder="Type a message...">
+                <button onclick="sendMessage()">Send</button>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        let chatData = [];
+        let activeChat = null;
+
+        async function loadChatData() {
+            const response = await fetch('chat.json');
+            chatData = await response.json();
+            displayContacts();
+        }
+
+        function displayContacts() {
+            const contactsDiv = document.getElementById("contacts");
+            contactsDiv.innerHTML = "";
+            chatData.forEach(contact => {
+                const div = document.createElement("div");
+                div.classList.add("contact");
+                div.innerHTML = `<img src="${contact.avatar}" alt=""> <span>${contact.name}</span>`;
+                div.onclick = () => openChat(contact.id);
+                contactsDiv.appendChild(div);
+            });
+        }
+
+        function openChat(id) {
+            activeChat = chatData.find(c => c.id === id);
+            document.getElementById("chat-title").textContent = activeChat.name;
+            displayMessages();
+        }
+
+        function displayMessages() {
+            const messagesDiv = document.getElementById("messages");
+            messagesDiv.innerHTML = "";
+            activeChat.messages.forEach(msg => {
+                const div = document.createElement("div");
+                div.classList.add("message");
+                div.classList.add(msg.sender === "You" ? "you" : "other");
+                div.textContent = msg.text; // Only display message text
+                messagesDiv.appendChild(div);
+            });
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function sendMessage() {
+            if (!activeChat) return;
+            const input = document.getElementById("messageInput");
+            const text = input.value.trim();
+            if (text === "") return;
+            activeChat.messages.push({ sender: "You", text });
+            displayMessages();
+            input.value = "";
+        }
+
+        // Change Theme Color
+        document.getElementById("colorPicker").addEventListener("input", function() {
+            document.documentElement.style.setProperty('--theme-color', this.value);
+            document.querySelector(".navbar").style.backgroundColor = this.value;
+            document.querySelector(".chat-header").style.backgroundColor = this.value;
+            document.querySelector(".input-box button").style.backgroundColor = this.value;
+        });
+
+        // Change Chat Background
+        document.getElementById("bgUploader").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("messages").style.backgroundImage = `url('${e.target.result}')`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        loadChatData();
+    </script>
+
 </body>
 </html>
